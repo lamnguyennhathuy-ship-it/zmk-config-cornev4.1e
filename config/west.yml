@@ -10,7 +10,7 @@ manifest:
     - name: AYM1607
       url-base: https://github.com/AYM1607
   projects:
-    - name: zephyr
+    - name: zmk
       remote: zmkfirmware
       revision: v3.5.0+zmk-fixes
       import: app/west.yml
