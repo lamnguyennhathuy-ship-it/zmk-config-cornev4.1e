@@ -20,12 +20,36 @@
 
 #define DEFAULT 0
 #define NUMBER  1
-#define FN  2
+#define FN      2
 #define HOTKEY  3
 
 
 
 / {
+   behaviors {
+        td0: tap_dance_0 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&to 0>, <&to 1>, <&to 2>;
+        };
+    };
+
+    macros {
+        macro1: toggle_hdr {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_wait_time 200>
+                , <&macro_press &kp LALT>
+                , <&macro_wait_time 200>
+                , <&macro_tap &kp B>
+                , <&macro_release &kp LGUI>
+                , <&macro_release &kp LALT>
+                ;
+        };
+    };
 
     keymap {
         compatible = "zmk,keymap";
@@ -37,21 +61,19 @@
        &kp TAB        &kp Q            &kp W           &kp E           &kp R           &kp T     /*|                                 |*/  &kp Y          &kp U           &kp I           &kp O           &kp SEMI       &kp BSLH
        &kp LSHIFT     &kp A            &kp S           &kp D           &kp F           &kp G     /*├─────────────╮     ╭─────────────┤*/  &kp H          &kp J           &kp K           &kp L           &kp P          &kp SQT
        &kp LCTRL      &kp Z            &kp X           &kp C           &kp V           &kp B                                              &kp N          &kp M           &kp COMMA       &kp DOT         &kp FSLH       &kp ENTER
-/* ╰───────────────┴───────────────┤*/                                 &kp LGUI      &mt LALT SPACE   &lt 1 BSPC         &lt 2 SPACE   &mt LSHIFT ESC    &to 1                                     //├───────────────┴───────────────╯
+/* ╰───────────────┴───────────────┤*/                                 &kp LGUI   &mt LALT LCTRL(BSPC) &lt 1 BSPC        &lt 2 SPACE   &mt LSHIFT ESC    &td0                                      //├───────────────┴───────────────╯
 //                                 ╰───────────────┴───────────────┴───────────────┴───────────────┴─────────────╯     ╰─────────────┴───────────────┴───────────────┴───────────────┴───────────────╯
             >;
         };
-
- 
 
         windows_symbols_layer {
             label = "NUMBER";
             bindings = <
 // ╭───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────╮                                 ╭───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────╮
        &trans          &kp PG_UP       &kp HOME        &kp UP          &kp END      &kp C_VOL_UP /*|                                 |*/  &kp EQUAL        &kp N7          &kp N8          &kp N9          &kp RBKT        &kp DEL
-       &trans          &kp PG_DN       &kp LEFT        &kp DOWN        &kp RIGHT    &kp C_VOL_DN /*├─────────────╮     ╭─────────────┤*/  &kp MINUS        &kp N4          &kp N5          &kp N6          &kp LBKT        &kp INS
-       &trans          &kp CAPS        &kp LEFT_BRACE  &kp C_PREV      &kp C_NEXT        &kp C_PP                                          &kp N0          &kp N1          &kp N2          &kp N3          &kp GRAVE       &trans
-/* ╰───────────────┴───────────────┤*/                                  &trans           &trans         &trans              &trans         &trans          &to 2                                   //├───────────────┴───────────────╯
+       ___             &kp PG_DN       &kp LEFT        &kp DOWN        &kp RIGHT    &kp C_VOL_DN /*├─────────────╮     ╭─────────────┤*/  &kp MINUS        &kp N4          &kp N5          &kp N6          &kp LBKT        &kp INS
+       ___             &kp CAPS        &macro1         &kp C_PREV      &kp C_NEXT        &kp C_PP                                          &kp N0          &kp N1          &kp N2          &kp N3          &kp GRAVE       &trans
+/* ╰───────────────┴───────────────┤*/                                 &trans            &trans         &trans              &trans         &trans          &trans                                  //├───────────────┴───────────────╯
 //                                 ╰───────────────┴───────────────┴───────────────┴───────────────┴─────────────╯     ╰─────────────┴───────────────┴───────────────┴───────────────┴───────────────╯
             >;
         };
@@ -61,10 +83,10 @@
             
             bindings = <
 // ╭───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────╮                                 ╭───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────╮
-       ___             &kp F1          &kp F2          &kp F3          &kp F4          &kp F5    /*|                                 |*/   &mkp LCLK     &mkp MCLK         &mkp MB4       &mkp MB5        &trans          &trans 
-       ___             &kp F6          &kp F7          &kp F8          &kp F9          &kp F10   /*├─────────────╮     ╭─────────────┤*/   &trans         &trans          &trans          &trans          &trans          &trans
-       ___             &kp F11         &kp F12         &kp F13         &kp F14         &kp F15                                             &trans         &trans          &trans     &ext_power EP_ON &ext_power EP_OFF &ext_power EP_TOG
-/* ╰───────────────┴───────────────┤*/                                  &trans           &trans         &trans              &trans         &trans         &to 0                                   //├───────────────┴───────────────╯
+       ___             &kp F1          &kp F2          &kp F3          &kp F4          &kp F5    /*|                                 |*/   &mkp LCLK     &mkp RCLK       &mkp MCLK        &mkp MB4       &mkp MB5         &trans
+       ___             &kp F6          &kp F7          &kp F8          &kp F9          &kp F10   /*├─────────────╮     ╭─────────────┤*/   &bt BT_NXT    &bt BT_SEL 0    &bt BT_SEL 1     &bt BT_SEL 2   &bt BT_SEL 3     &bt BT_SEL 4
+       ___             &kp F11         &kp F12         &kp F13         &kp F14         &kp F15                                             &trans        &trans          &trans           &trans         &trans           &trans
+/* ╰───────────────┴───────────────┤*/                                 &trans            &trans         &trans              &trans         &trans          &trans                                  //├───────────────┴───────────────╯
 //                                 ╰───────────────┴───────────────┴───────────────┴───────────────┴─────────────╯     ╰─────────────┴───────────────┴───────────────┴───────────────┴───────────────╯
             >;
       };
@@ -83,4 +105,3 @@
             >;
         };
     };
-};
