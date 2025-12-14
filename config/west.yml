@@ -18,6 +18,7 @@ manifest:
     - name: zmk-nice-oled
       remote: mctechnology17
     - name: zmk-driver-azoteq-iqs5xx
+      revision: main
       remote: AYM1607
   self:
     path: config
