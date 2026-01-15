@@ -24,18 +24,8 @@
 };
 
 / {
-    // Keep this the same
-    joystick_left: joystick_left {
-        compatible = "zmk,input-analog-selector";
-        status = "okay";
-        sampling-hz = <100>;
-        x_axis { io-channels = <&adc 5>; }; 
-        y_axis { io-channels = <&adc 7>; };
-    };
-
-    // Reference by path /joystick_left
-    left_listener {
+    joystick_listener {
         compatible = "zmk,input-listener";
-        device = <&joystick_left>; 
+        device = <&anin0>;
     };
 };
