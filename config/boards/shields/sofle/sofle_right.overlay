@@ -29,15 +29,16 @@
 };
 
 / {
-    joystick_left: joystick_left {
+    joystick_right: joystick_right {
         compatible = "zmk,input-analog-selector";
         sampling-hz = <100>;
         x_axis { io-channels = <&adc 5>; }; 
         y_axis { io-channels = <&adc 7>; };
     };
 
-    left_listener {
+    right_listener {
         compatible = "zmk,input-listener";
-        device = <&joystick_left>;
+        device = <&joystick_right>;
+        input-processors = <&zip_xy_to_scroll_mapper>;
     };
 };
