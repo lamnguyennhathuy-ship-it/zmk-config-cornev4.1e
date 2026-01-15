@@ -24,7 +24,8 @@
 };
 
 / {
-    joystick_left: joystick_left {
+    // We name this 'joystick' locally so the listener always finds it
+    joystick: joystick {
         compatible = "zmk,input-analog-selector";
         status = "okay";
         sampling-hz = <100>;
@@ -32,11 +33,9 @@
         y_axis { io-channels = <&adc 7>; };
     };
 
-    // This listener ONLY exists on the left side
-    left_listener {
+    joystick_listener {
         compatible = "zmk,input-listener";
-        device = <&joystick_left>;
+        device = <&joystick>;
+        // No processor here = standard cursor movement
     };
 };
-
-&right_listener { status = "disabled"; };
