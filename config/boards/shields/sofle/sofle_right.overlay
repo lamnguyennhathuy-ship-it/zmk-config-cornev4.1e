@@ -29,7 +29,7 @@
 };
 
 / {
-    joystick_right: joystick_right {
+    joystick: joystick {
         compatible = "zmk,input-analog-selector";
         status = "okay";
         sampling-hz = <100>;
@@ -37,12 +37,10 @@
         y_axis { io-channels = <&adc 7>; };
     };
 
-    // This listener ONLY exists on the right side
-    right_listener {
+    joystick_listener {
         compatible = "zmk,input-listener";
-        device = <&joystick_right>;
+        device = <&joystick>;
+        // This transforms the right side into a scroll wheel
         input-processors = <&zip_xy_to_scroll_mapper>;
     };
 };
-
-&left_listener { status = "disabled"; };
