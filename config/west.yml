@@ -4,8 +4,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: mctechnology17
       url-base: https://github.com/mctechnology17
-#    - name: badjeff
-#      url-base: https://github.com/badjeff
+    - name: badjeff
+      url-base: https://github.com/badjeff
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -14,8 +14,8 @@ manifest:
     - name: zmk-nice-oled
       remote: mctechnology17
       revision: main
-#    - name: zmk-analog-input-driver
-#      remote: badjeff
-#      revision: main
+    - name: zmk-analog-input-driver
+      remote: badjeff
+      revision: main
   self:
     path: config
