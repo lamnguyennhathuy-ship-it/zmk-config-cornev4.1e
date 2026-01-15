@@ -29,18 +29,9 @@
 };
 
 / {
-    joystick: joystick {
-        compatible = "zmk,input-analog-selector";
-        status = "okay";
-        sampling-hz = <100>;
-        x_axis { io-channels = <&adc 5>; }; 
-        y_axis { io-channels = <&adc 7>; };
-    };
-
-    joystick_listener {
+    right_joystick_listener {
         compatible = "zmk,input-listener";
-        device = <&joystick>;
-        // This transforms the right side into a scroll wheel
-        input-processors = <&zip_xy_to_scroll_mapper>;
+        device = <&anin0>; 
+        input-processors = <&zip_xy_to_scroll_mapper>; 
     };
 };
